@@ -1,0 +1,27 @@
+code {
+  display: block;
+  margin: 20px 0 15px 0;
+  padding: 10px;
+  background: #eee;
+}
+
+.progress {
+  color: black;
+  position: fixed;
+  margin-left: -20px;
+  margin-top: -20px;
+  top: 50%;
+  left: 50%;
+}
+
+.progress-background {
+  background-color: black;
+  opacity: .3;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 100000;
+  margin: 0;
+  top: 0;
+  left: 0;
+}
