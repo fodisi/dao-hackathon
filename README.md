@@ -21,6 +21,7 @@ find a member =)
 ### Prerequisites
 
 * use a browser with metamask
+* have public key and private key. see https://consensys.github.io/linnia-faucet/?42
 * register as a linnia user. see https://consensys.github.io/linnia-faucet/?42
 
 ### Installing
