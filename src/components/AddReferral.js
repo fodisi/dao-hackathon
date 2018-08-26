@@ -5,7 +5,7 @@ import { encrypt } from './crypto-utils';
 import Linnia from '@linniaprotocol/linnia-js';
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
-import { checkIfReferred, referMember } from '../actions/ReferralAction'
+import { referMember } from '../actions/ReferralAction'
 
 
 const hubAddress = config.LINNIA_HUB_ADDRESS;
@@ -46,6 +46,7 @@ export class AddReferral extends Component {
 
         try {
             memberReferred = await referMember(eth_wallet, linnia_user);
+            this.setState({ msg: <Message positive header="Success!" content={"Friend referred successfully!"} /> })
         } catch (err) {
             this.setState({ errorMessage: err.message });
             return
