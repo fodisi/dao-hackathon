@@ -5,6 +5,7 @@ import Web3 from 'web3';
 import IPFS from 'ipfs-mini';
 import config from '../config';
 import SecretEventOrg from '../ethereum/SecretEventOrg';
+import { decrypt } from './crypto-utils';
 
 const hubAddress = config.LINNIA_HUB_ADDRESS;
 const protocol = config.LINNIA_IPFS_PROTOCOL;
@@ -14,6 +15,7 @@ const host = config.LINNIA_IPFS_HOST;
 const web3 = new Web3(window.web3.currentProvider);
 const ipfs = new IPFS({ host: host, port: port, protocol: protocol });
 const linnia = new Linnia(web3, ipfs, { hubAddress });
+
 
 export default class FullDeail extends Component {
 	state = {
@@ -37,6 +39,35 @@ export default class FullDeail extends Component {
 		console.log(userAddr[0]);
 		let {canAccess, ipfsHash} = await linnia.getPermission("0x382299ce16150e3e1782a265d1c12f788fafc1947761eed4afd2bfa65618589a",userAddr[0]);
 		console.log(canAccess, ipfsHash);
+
+		if(canAccess){
+			console.log('ipfsDownload')
+
+			const privateKey = this.state.linnia_pk
+			const ipfsLink = ipfsHash
+
+			// Use ipfs library to pull the encrypted data down from IPFS
+			ipfs.cat(ipfsLink, async (err, ipfsRes) => {
+				if (err) {
+					console.log('ipfsDownload.error', err);
+				} else {
+					const encrypted = ipfsRes;
+
+					console.log('ipfsDownload.got encrypted data', encrypted);
+					// Try to decrypt with the provided key
+					try {
+						const decrypted = await decrypt(privateKey, encrypted);
+						// cosnt decrypted = JSON.stringify(decrypted.toString());
+						console.log('ipfsDownload.got decrypted data', decrypted);
+						//dispatch(assignRecord(record));
+					} catch (e) {
+						console.log('ipfsDownload.decryption failed', e);
+						//return (alert('Error decrypting data. Probably wrong private key'));
+					}
+				}
+			})
+		}
+
 	}
 
 	render() {
