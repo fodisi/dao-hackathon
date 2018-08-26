@@ -1,6 +1,5 @@
 import SecretEventOrg from '../ethereum/SecretEventOrg';
 import { getDefaultEthereumAccount } from '../actions/EthereumAccountAction';
-// import web3 from '../utils/web3';
 
 // export const checkIfReferred = (eth_address) => async (dispatch) => {
 export async function checkIfReferred(eth_address) {
