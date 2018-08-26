@@ -1,8 +1,7 @@
 ## Linnia Hackathon powered by ConsenSys
 
-
 **Application Name**: Secret Event Manager
-![Image Logo](https://github.com/vutsalsinghal/linnia-hackathon/blob/master/Word%20Art.jpeg)
+![Image Logo](https://github.com/vutsalsinghal/linnia-hackathon/blob/master/Logo_SEM.jpg)
 
 ### Mission Statement:
 How we spred, promote, advertize our secret dinnning events
