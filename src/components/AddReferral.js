@@ -15,15 +15,18 @@ export class AddReferral extends Component {
         event.preventDefault();
         const linnia_user = this.state.linnia_pk;
         const eth_wallet = this.state.eth_pk;
+        let result;
 
         this.setState({ errorMessage: '', loading: true });
 
         try {
-            await referMember(eth_wallet, linnia_user);
-            this.setState({ msg: <Message positive header="Success!" content={"Friend referred successfully!"} /> })
+            result = await referMember(eth_wallet);
+            if (result) {
+                this.setState({ msg: <Message positive header="Success!" content={"Friend referred successfully!"} /> });
+            }
         } catch (err) {
-            this.setState({ errorMessage: err.message });
-            return
+            this.setState({ errorMessage: err.message, loading: false });
+            return;
         }
 
         this.setState({ loading: false });
