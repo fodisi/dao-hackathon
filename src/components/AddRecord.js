@@ -24,7 +24,6 @@ export class AddRecord extends Component {
     event: '',
     description: '',
     owner_pk: '',
-    propety: '',
     errorMessage: '',
     loading: false,
     msg: '',
