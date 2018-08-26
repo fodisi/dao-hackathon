@@ -6,6 +6,8 @@ import Linnia from '@linniaprotocol/linnia-js';
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
 import  moment  from 'moment';
+import SecretEventOrg from '../ethereum/SecretEventOrg';
+import EthCrypto from 'eth-crypto';
 
 const hubAddress = config.LINNIA_HUB_ADDRESS;
 const protocol = config.LINNIA_IPFS_PROTOCOL;
@@ -23,6 +25,7 @@ export class AddRecord extends Component {
     eventName: '',
     descript: '',
     location:'',
+    capacity:0,
     deposit: 0,
     start_time:'',
     duration:0,
@@ -44,6 +47,7 @@ export class AddRecord extends Component {
       'Name': this.state.eventName,
       'Descript': this.state.descript,
       'Deposit' : this.state.deposit,
+      'Capacity' : this.state.capacity,
       'Start Time' : this.state.start_time,
       'Duration' : this.state.duration,
       'Location' : this.state.location,
@@ -82,7 +86,7 @@ export class AddRecord extends Component {
     try {
       const { records } = await linnia.getContractInstances();
       await records.addRecord(dataHash, metadata, dataUri, { from: owner, gasPrice, gas });
-
+      await SecretEventOrg.methods.addEvent(dataHash, data.Name, data.Descript, data.Capacity, data.Deposit, unix_start_time, data.Duration).send({from:owner});
       this.setState({ msg: <Message positive header="Success!" content={"Event Created Successfully!"} /> });
     } catch (err) {
       this.setState({ errorMessage: err.message, loading: false });
@@ -135,6 +139,10 @@ export class AddRecord extends Component {
           <input id='eventName' type='text' onChange={event => this.setState({ eventName: event.target.value })} value={this.state.event} />
         </Form.Field>
         <Form.TextArea value={this.state.descript} label="Event Brief" onChange={descript => this.setState({ descript: descript.target.value })} />
+        <Form.Field>
+          <label htmlFor='capacity'>{"Maximum Capacity"}</label>
+          <input id='capacity' type='number' onChange={event => this.setState({ capacity: event.target.value })} value={this.state.capacity} />
+        </Form.Field>
         <Form.Field>
           <label htmlFor='deposit'>{"Fee"}</label>
           <input id='deposit' type='number' onChange={event => this.setState({ deposit: event.target.value })} value={this.state.deposit} />
