@@ -1,6 +1,6 @@
 pragma solidity ^0.4.24;
 
-// Deployed at 0x889Ad86BE3EBE80D54936539E0D75917F09d1390 on Ropsten!
+// Deployed at 0x6c62e236aa63749682886f49dea4fb72e97cda16 on Ropsten!
 
 contract SecretEventOrg{
     address private organizer;                                                  // Address of organizer
@@ -125,6 +125,10 @@ contract SecretEventOrg{
         return (eventInfo[_recordHash].eventName, eventInfo[_recordHash].describe, eventInfo[_recordHash].capacity, eventInfo[_recordHash].deposit, eventInfo[_recordHash].start_time, eventInfo[_recordHash].duration);
     }
 
+    // Returns event info
+    function getSecretEventInfo(bytes32 _recordHash) public view returns(string location, string details){
+        return (eventInfo[_recordHash].location, eventInfo[_recordHash].details);
+    }
     // Checks if address was referred.
     function checkIfReferred(address addr) public view returns(bool) {
         return referralInfo[addr] != 0;
