@@ -21,7 +21,6 @@ export class DeclineReferral extends Component {
             this.setState({ msg: <Message positive header="Success!" content={"Referral declined for user '" + currentEthAddress + "'."} /> })
         } catch (err) {
             this.setState({ errorMessage: err.message });
-            return
         }
 
         this.setState({ loading: false });
