@@ -5,7 +5,7 @@ import { encrypt } from './crypto-utils';
 import Linnia from '@linniaprotocol/linnia-js';
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
-
+import  moment  from 'moment';
 
 const hubAddress = config.LINNIA_HUB_ADDRESS;
 const protocol = config.LINNIA_IPFS_PROTOCOL;
@@ -22,8 +22,13 @@ const linnia = new Linnia(web3, ipfs, { hubAddress });
 export class AddRecord extends Component {
   state = {
     event: '',
-    description: '',
-    owner_pk: '',
+    descript: '',
+    location:'',
+    deposit: 0,
+    start_time:'',
+    duration:0,
+    owner_pk:'',
+    details:'',
     errorMessage: '',
     loading: false,
     msg: '',
@@ -34,11 +39,18 @@ export class AddRecord extends Component {
     const metadata = this.state.event;
     const data = {
       'Name': this.state.event,
-      'Description': this.state.description
+      'Descript': this.state.description,
+      'Deposit' : this.state.deposit,
+      'Start Time' : this.state.start_time,
+      'Duration' : this.state.duration,
+      'Location' : this.state.location,
+      'Details'  : this.state.details
     };
     const ownerPublicKey = this.state.owner_pk;
     let encrypted, ipfsRecord;
-
+    console.log(this.state.start_time);
+    const unix_start_time = moment(this.state.start_time).unix();
+    console.log(unix_start_time);
     this.setState({ errorMessage: '', loading: true });
 
     try {
@@ -84,12 +96,28 @@ export class AddRecord extends Component {
           <label htmlFor='event'>{"Event Name"}</label>
           <input id='event' type='text' onChange={event => this.setState({ event: event.target.value })} value={this.state.event} />
         </Form.Field>
-        <Form.TextArea value={this.state.description} label="Event Description" onChange={description => this.setState({ description: description.target.value })} />
+        <Form.TextArea value={this.state.descript} label="Event Brief" onChange={descript => this.setState({ descript: descript.target.value })} />
+        <Form.Field>
+          <label htmlFor='deposit'>{"Fee"}</label>
+          <input id='deposit' type='number' onChange={event => this.setState({ deposit: event.target.value })} value={this.state.deposit} />
+        </Form.Field>
+        <Form.Field>
+          <label htmlFor='starttime'>{"Event Time"}</label>
+          <input id='starttime' type='datetime-local' onChange={event => this.setState({ start_time: event.target.value })} value={this.state.start_time} />
+        </Form.Field>
+        <Form.Field>
+          <label htmlFor='event'>{"Event Duration"}</label>
+          <input id='duration' type='number' onChange={event => this.setState({ duration: event.target.value })} value={this.state.duration} />
+        </Form.Field>
+        <Form.Field>
+          <label htmlFor='location'>{"Location"}</label>
+          <input id='location' type='text' onChange={event => this.setState({ location: event.target.value })} value={this.state.location} />
+        </Form.Field>
+        <Form.TextArea value={this.state.details} label="Event Details" onChange={details => this.setState({ details: details.target.value })} />
         <Form.Field>
           <label htmlFor='public_key'>Your Public Key</label>
           <input id='public_key' type='text' value={this.state.owner_pk} onChange={owner_pk => this.setState({ owner_pk: owner_pk.target.value })} placeholder='Public Key' />
         </Form.Field>
-
         <Message error header="Oops!" content={this.state.errorMessage} />
         <Button basic primary type='submit' loading={this.state.loading} disabled={this.state.loading}>Create Event</Button>
         {this.state.msg}
