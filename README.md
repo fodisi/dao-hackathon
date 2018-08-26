@@ -40,11 +40,11 @@ find a member =)
 
 |   name  | Link
 |----------|----------------|
-| Vutsal | [Github](https://github.com/vutsalsinghal) |
-| fodisi | [Github](https://github.com/fodisi) |
-| Amit | [Github](https://github.com/panghalamit) |
-| mickael | [Github](https://github.com/mickaelgermemont) |
-| lavera | [Github](https://github.com/laveradesign) |
+| Vutsal Singhal | [@vutsalsinghal](https://github.com/vutsalsinghal) |
+| Francis  | [@fodisi](https://github.com/fodisi) |
+| Amit Panghal | [@panghalamit](https://github.com/panghalamit) |
+| Mickael Germemont | [@mickaelgermemont](https://github.com/mickaelgermemont) |
+| Lavera | [@lavera](https://github.com/laveradesign) |
 
 ## License
 
