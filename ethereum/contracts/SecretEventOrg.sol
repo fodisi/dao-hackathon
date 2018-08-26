@@ -32,10 +32,11 @@ contract SecretEventOrg{
     // address of members
     address[] innerCircle;
     // information on events of this organizer
-    mapping (bytes32 => SecretEvent) eventInfo;
+    mapping (bytes32 => SecretEvent) public eventInfo;
     // total events successful so far
     uint numEvents=0;
     uint MAX_REFERRALS=5;
+    bytes32 public currentEventHash;
     // constructor
     constructor(string public_key) public {
         organizer = msg.sender;
@@ -57,7 +58,7 @@ contract SecretEventOrg{
     
     // check if current event expired
     modifier _eventNotExpired(bytes32 id) {
-        require(eventInfo[id].start_time != 0 && now > (eventInfo[id].start_time + eventInfo[id].duration), "can't create a new event");
+        require(eventInfo[id].start_time != 0 && now < eventInfo[id].start_time, "can't create a new event");
         _;
     }
     // check if maximum event capacity reached
@@ -92,7 +93,7 @@ contract SecretEventOrg{
     }
      
     // member refers a friend
-    function referFriend(address _addr) public _onlyMember(msg.sender) _referralsAllowed(msg.sender) _alreadyReferred(_addr) {
+    function referFriend(address _addr) public _onlyMember(msg.sender) _referralsAllowed(msg.sender) _notAlreadyReferred(_addr) {
         referralInfo[_addr] = msg.sender;
         memberInfo[msg.sender].referrals_remaining--; 
     }
@@ -100,11 +101,14 @@ contract SecretEventOrg{
     function applyMembership(string public_key) public _alreadyReferred(msg.sender) {
         memberInfo[msg.sender] = Member(msg.sender, memberInfo[referralInfo[msg.sender]].provenance+1, referralInfo[msg.sender], MAX_REFERRALS, public_key);
         referralInfo[msg.sender] = 0;
+        innerCircle.push(msg.sender);
     } 
     
     // add Event 
     function addEvent(bytes32 id, string name, string describe, uint capacity, uint deposit, uint start_time, uint duration) public _onlyOrganizer(msg.sender) _eventDoesntExists(id){
-        eventInfo[id] = SecretEvent(name, describe, capacity, deposit, start_time, duration, "SECRET: revealed to members", "SECRET: revealed to members");
+        eventInfo[id] = SecretEvent(name, describe, capacity, deposit, now+start_time, duration, "SECRET: revealed to members", "SECRET: revealed to members");
+        numEvents++;
+        currentEventHash = id;
     }
     // attendEvent
     function attendEvent(bytes32 id) public payable _onlyMember(msg.sender) _eventNotExpired(id) _maxEventCap(id) _ifDepositEnough(id, msg.value){
