@@ -37,12 +37,6 @@ find a member =)
 ## Contributing
 
 ## Authors
-* [Vutsal](https://medium.com/linnia/linnia-f4f139a795ef) - Github
-* [fodisi](https://github.com/fodisi) - Github
-* [Amit](https://github.com/panghalamit) - Github
-* [mickael](https://github.com/mickaelgermemont) - Github
-* [lavera](https://github.com/laveradesign) - Github
-
 
 |   name  | Link
 |----------|----------------|
