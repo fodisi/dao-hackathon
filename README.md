@@ -44,6 +44,14 @@ find a member =)
 * [lavera](https://github.com/laveradesign) - Github
 
 
+|   name  | Link
+|----------|----------------|
+| Vutsal | [Github](https://github.com/vutsalsinghal) |
+| fodisi | [Github](https://github.com/fodisi) |
+| Amit | [Github](https://github.com/panghalamit) |
+| mickael | [Github](https://github.com/mickaelgermemont) |
+| lavera | [Github](https://github.com/laveradesign) |
+
 ## License
 
 
