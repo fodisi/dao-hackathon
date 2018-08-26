@@ -1,7 +1,5 @@
 pragma solidity ^0.4.24;
-
 // Deployed at 0x77fc6f72296e8da95c484bf15ec98490a2b2c3fe on Ropsten!
-
 contract SecretEventOrg{
     address private organizer;                                                  // Address of organizer
     string public encryption_key;                                               // Linnia encryption_key of event organizer 
@@ -124,7 +122,6 @@ contract SecretEventOrg{
     function getEventInfo(bytes32 _recordHash) public view returns(string eventName, string describe, uint capacity, uint deposit, uint start_time, uint duration){
         return (eventInfo[_recordHash].eventName, eventInfo[_recordHash].describe, eventInfo[_recordHash].capacity, eventInfo[_recordHash].deposit, eventInfo[_recordHash].start_time, eventInfo[_recordHash].duration);
     }
-
     // Returns event info
     function getSecretEventInfo(bytes32 _recordHash) public view returns(string location, string details){
         return (eventInfo[_recordHash].location, eventInfo[_recordHash].details);
@@ -133,7 +130,6 @@ contract SecretEventOrg{
     function checkIfReferred(address addr) public view returns(bool) {
         return referralInfo[addr] != 0;
     }
-
     // Checks if address is a member.
     function checkIfMember(address addr) public view returns(bool) {
         return memberInfo[addr].addr != 0;
