@@ -4,7 +4,7 @@ import IPFS from 'ipfs-mini';
 import { encrypt } from './crypto-utils';
 import Linnia from '@linniaprotocol/linnia-js';
 import React, { Component } from 'react';
-import {Form, Button, Message} from 'semantic-ui-react';
+import { Form, Button, Message } from 'semantic-ui-react';
 
 
 const hubAddress = config.LINNIA_HUB_ADDRESS;
@@ -20,29 +20,32 @@ const ipfs = new IPFS({ host: host, port: port, protocol: protocol });
 const linnia = new Linnia(web3, ipfs, { hubAddress });
 
 export class AddRecord extends Component {
-    state = {
-      event: '',
-      description: '',
-      owner_pk: '',
-      propety: '',
-      errorMessage:'',
-      loading:false,
-      msg:'',
-    }
+  state = {
+    event: '',
+    description: '',
+    owner_pk: '',
+    propety: '',
+    errorMessage: '',
+    loading: false,
+    msg: '',
+  }
 
   handleSubmit = async (event) => {
     event.preventDefault();
     const metadata = this.state.event;
-    const data = this.state.description;
+    const data = {
+      'Name': this.state.event,
+      'Description': this.state.description
+    };
     const ownerPublicKey = this.state.owner_pk;
     let encrypted, ipfsRecord;
-    
-    this.setState({errorMessage:'', loading:true});
+
+    this.setState({ errorMessage: '', loading: true });
 
     try {
-      encrypted = await encrypt(ownerPublicKey, data);
-    } catch(err) {
-      this.setState({errorMessage:err.message});
+      encrypted = await encrypt(ownerPublicKey, JSON.stringify(data));
+    } catch (err) {
+      this.setState({ errorMessage: err.message });
       return
     }
 
@@ -52,8 +55,8 @@ export class AddRecord extends Component {
           err ? reject(err) : resolve(ipfsRed)
         })
       })
-    } catch(err) {
-      this.setState({errorMessage:err.message});
+    } catch (err) {
+      this.setState({ errorMessage: err.message });
       return
     }
 
@@ -64,15 +67,15 @@ export class AddRecord extends Component {
 
     try {
       const { records } = await linnia.getContractInstances();
-      await records.addRecord(dataHash, metadata, dataUri, {from: owner, gasPrice, gas});
+      await records.addRecord(dataHash, metadata, dataUri, { from: owner, gasPrice, gas });
 
-      this.setState({msg:<Message positive header="Success!" content={"Event Created Successfully!"} />});
-    } catch(err) {
-      this.setState({errorMessage:err.message});
+      this.setState({ msg: <Message positive header="Success!" content={"Event Created Successfully!"} /> });
+    } catch (err) {
+      this.setState({ errorMessage: err.message });
       return
     }
 
-    this.setState({loading:false});
+    this.setState({ loading: false });
   }
 
   render() {
@@ -80,12 +83,12 @@ export class AddRecord extends Component {
       <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
         <Form.Field>
           <label htmlFor='event'>{"Event Name"}</label>
-          <input id='event' type='text' onChange={event => this.setState({event:event.target.value})} value={this.state.event} />
+          <input id='event' type='text' onChange={event => this.setState({ event: event.target.value })} value={this.state.event} />
         </Form.Field>
-        <Form.TextArea value={this.state.description} label="Event Description" onChange={description => this.setState({description:description.target.value})} />
+        <Form.TextArea value={this.state.description} label="Event Description" onChange={description => this.setState({ description: description.target.value })} />
         <Form.Field>
           <label htmlFor='public_key'>Your Public Key</label>
-          <input id='public_key' type='text' value={this.state.owner_pk} onChange={owner_pk =>this.setState({owner_pk: owner_pk.target.value})} placeholder='Public Key' />
+          <input id='public_key' type='text' value={this.state.owner_pk} onChange={owner_pk => this.setState({ owner_pk: owner_pk.target.value })} placeholder='Public Key' />
         </Form.Field>
 
         <Message error header="Oops!" content={this.state.errorMessage} />
