@@ -4,103 +4,94 @@ import IPFS from 'ipfs-mini';
 import { encrypt } from './crypto-utils';
 import Linnia from '@linniaprotocol/linnia-js';
 import React, { Component } from 'react';
+import {Form, Button, Message} from 'semantic-ui-react';
 
 
 const hubAddress = config.LINNIA_HUB_ADDRESS;
 const protocol = config.LINNIA_IPFS_PROTOCOL;
 const port = config.LINNIA_IPFS_PORT;
 const host = config.LINNIA_IPFS_HOST;
-const gasPrice = 20
-const gas = 500000
+const gasPrice = 20;
+const gas = 500000;
 
 
-const web3 = new Web3(window.web3.currentProvider)
-
-const ipfs = new IPFS({ host: host, port: port, protocol: protocol })
-
-const linnia = new Linnia(web3, ipfs, { hubAddress })
-
-
-async function createRecord(metadata, data, ownerPublicKey) {
-  let encrypted, ipfsRecord;
-  try {
-    encrypted = await encrypt(ownerPublicKey, data)
-  } catch (e) {
-    console.error(e)
-    return
-  }
-
-  try {
-    ipfsRecord = await new Promise((resolve, reject) => {
-      ipfs.add(encrypted, (err, ipfsRed) => {
-        err ? reject(err) : resolve(ipfsRed)
-      })
-    })
-  } catch (e) {
-    console.error(e)
-    return
-  }
-
-  const dataUri = ipfsRecord
-  const [owner] = await web3.eth.getAccounts()
-  const dataHash = await  linnia.web3.utils.sha3(dataUri);
-
-  try {
-    const { records } = await linnia.getContractInstances()
-    await records.addRecord(dataHash, metadata, dataUri, {
-      from: owner,
-      gasPrice,
-      gas,
-    })
-  } catch (e) {
-    console.error(e)
-    return
-  }
-}
-
+const web3 = new Web3(window.web3.currentProvider);
+const ipfs = new IPFS({ host: host, port: port, protocol: protocol });
+const linnia = new Linnia(web3, ipfs, { hubAddress });
 
 export class AddRecord extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
+    state = {
       event: '',
       description: '',
       owner_pk: '',
       propety: '',
-
+      errorMessage:'',
+      loading:false,
+      msg:'',
     }
-  }
 
-  handleSubmit = (event) => {
-    event.preventDefault()
-    const metadata = event.target.elements.event.value
-    const data = event.target.elements.description.value
-    const pk = event.target.elements.public_key.value
-    createRecord(metadata, data, pk)
+  handleSubmit = async (event) => {
+    event.preventDefault();
+    const metadata = this.state.event;
+    const data = this.state.description;
+    const ownerPublicKey = this.state.owner_pk;
+    let encrypted, ipfsRecord;
+    
+    this.setState({errorMessage:'', loading:true});
+
+    try {
+      encrypted = await encrypt(ownerPublicKey, data);
+    } catch(err) {
+      this.setState({errorMessage:err.message});
+      return
+    }
+
+    try {
+      ipfsRecord = await new Promise((resolve, reject) => {
+        ipfs.add(encrypted, (err, ipfsRed) => {
+          err ? reject(err) : resolve(ipfsRed)
+        })
+      })
+    } catch(err) {
+      this.setState({errorMessage:err.message});
+      return
+    }
+
+    const dataUri = ipfsRecord;
+    const [owner] = await web3.eth.getAccounts();
+    const dataHash = await linnia.web3.utils.sha3(dataUri);
+    console.log(dataHash);
+
+    try {
+      const { records } = await linnia.getContractInstances();
+      await records.addRecord(dataHash, metadata, dataUri, {from: owner, gasPrice, gas});
+
+      this.setState({msg:<Message positive header="Success!" content={"Event Created Successfully!"} />});
+    } catch(err) {
+      this.setState({errorMessage:err.message});
+      return
+    }
+
+    this.setState({loading:false});
   }
 
   render() {
     return (
-      <form className='pure-form pure-form-stacked' onSubmit={this.handleSubmit}>
-        <fieldset>
+      <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
+        <Form.Field>
           <label htmlFor='event'>{"Event Name"}</label>
-          <input id='event' type='text' onChange={event => this.setState({event:event.target.value})} value={this.state.event} placeholder='Event Name' />
-
-          <br />
-
-          <label htmlFor='description'>Event Description</label>
-          <input id='description' type='text' value={this.state.description} onChange={description => this.setState({description:description.target.value})} placeholder='Event Details' />
-
-          <br />
+          <input id='event' type='text' onChange={event => this.setState({event:event.target.value})} value={this.state.event} />
+        </Form.Field>
+        <Form.TextArea value={this.state.description} label="Event Description" onChange={description => this.setState({description:description.target.value})} />
+        <Form.Field>
           <label htmlFor='public_key'>Your Public Key</label>
           <input id='public_key' type='text' value={this.state.owner_pk} onChange={owner_pk =>this.setState({owner_pk: owner_pk.target.value})} placeholder='Public Key' />
+        </Form.Field>
 
-          <br />
-
-          <button type='submit' className='pure-button pure-button-primary'>Create Event</button>
-        </fieldset>
-      </form>
+        <Message error header="Oops!" content={this.state.errorMessage} />
+        <Button basic primary type='submit' loading={this.state.loading} disabled={this.state.loading}>Create Event</Button>
+        {this.state.msg}
+      </Form>
     );
   }
 }
