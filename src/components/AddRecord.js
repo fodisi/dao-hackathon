@@ -95,7 +95,6 @@ export class AddRecord extends Component {
           <label htmlFor='event'>{"Event Name"}</label>
           <input id='eventName' type='text' onChange={event => this.setState({ eventName: event.target.value })} value={this.state.event} />
         </Form.Field>
-        <Form.TextArea value={this.state.description} label="Event Description" onChange={event => this.setState({ description: event.target.value })} />
         <Form.TextArea value={this.state.descript} label="Event Brief" onChange={descript => this.setState({ descript: descript.target.value })} />
         <Form.Field>
           <label htmlFor='deposit'>{"Fee"}</label>
