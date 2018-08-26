@@ -4,7 +4,13 @@
 **Application Name**: Secret Event Manager
 ![Image Logo](https://github.com/vutsalsinghal/linnia-hackathon/blob/master/Word%20Art.jpeg)
 
-***Join our exclusive societies***
+### Mission Statement:
+How we spred, promote, advertize our secret dinnning events
+to our sef growing inner-circle of members . so that, they can confidently recommend
+our events secretly and engaging, exotic way
+
+
+#### Join our exclusive societies
 There was many **Exclusive Secret Societies** in the human history. Just to name a few:
 * **Freemasons** – are the longest-lasting secret society and still in existence
 * **Illuminati** – why roots are coming from freemasons but they become a prime focus for conspiracy theorists. There are no evidences that they still exist and this will just add to their mystique.
