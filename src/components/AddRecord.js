@@ -14,7 +14,6 @@ const host = config.LINNIA_IPFS_HOST;
 const gasPrice = 20;
 const gas = 500000;
 
-
 const web3 = new Web3(window.web3.currentProvider);
 const ipfs = new IPFS({ host: host, port: port, protocol: protocol });
 const linnia = new Linnia(web3, ipfs, { hubAddress });
