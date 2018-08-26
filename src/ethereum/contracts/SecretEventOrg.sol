@@ -1,6 +1,6 @@
 pragma solidity ^0.4.24;
 
-// Deployed at 0x6c62e236aa63749682886f49dea4fb72e97cda16 on Ropsten!
+// Deployed at 0x77fc6f72296e8da95c484bf15ec98490a2b2c3fe on Ropsten!
 
 contract SecretEventOrg{
     address private organizer;                                                  // Address of organizer
@@ -137,5 +137,11 @@ contract SecretEventOrg{
     // Checks if address is a member.
     function checkIfMember(address addr) public view returns(bool) {
         return memberInfo[addr].addr != 0;
+    }
+    
+    // organizer adds members 
+    function addMember(address newMember, string memberPublicKey) public  _onlyOrganizer(msg.sender) {
+        memberInfo[newMember] = Member(newMember, 1, organizer, MAX_REFERRALS, memberPublicKey);
+        innerCircle.push(newMember);
     }
 }

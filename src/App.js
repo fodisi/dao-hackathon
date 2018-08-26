@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import {Grid, Card, Icon, Modal, Button, Container} from 'semantic-ui-react';
+import {Grid, Card, Icon, Modal, Button} from 'semantic-ui-react';
 import Layout from './components/layout';
 import { AcceptDeclineContainer } from './components/AcceptDeclineContainer';
-import config from './config';
-import request from 'request';
 import SecretEventOrg from './ethereum/SecretEventOrg';
 import Web3 from 'web3';
+import FullDetail from './components/FullDetail';
 
 class App extends Component{
   state = {
@@ -36,9 +35,11 @@ class App extends Component{
     */
     return (
         <Card>
-          <Card.Header>Name: {this.state.eventName}</Card.Header>
-          <Card.Meta>Capacity: {this.state.capacity}</Card.Meta>
-          <Card.Description>Min Deposit: {Web3.utils.fromWei(this.state.deposit.toString(),'ether')} ether</Card.Description>
+          <Card.Content>
+            <Card.Header>Name: {this.state.eventName}</Card.Header>
+            <Card.Meta>Capacity: {this.state.capacity}</Card.Meta>
+            <Card.Description>Min Deposit: {Web3.utils.fromWei(this.state.deposit.toString(),'ether')} ether</Card.Description>
+          </Card.Content>
         </Card>
     );
   }
@@ -66,6 +67,20 @@ class App extends Component{
                   </Modal.Content>
                 </Modal>
               </Grid.Row>
+              <Grid.Row>
+               <Modal size='small'
+                 trigger={
+                   <Button icon labelPosition='left' className="primary" floated="right">
+                     <Icon name='add' />
+                     Full Details
+                   </Button>
+                 }>
+                 <Modal.Header>Full Details of Event</Modal.Header>
+                 <Modal.Content>
+                   <FullDetail />
+                 </Modal.Content>
+               </Modal>
+             </Grid.Row>
             </Grid.Column>
           </Grid>
       </Layout>
