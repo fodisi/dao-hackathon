@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
-import { referMember } from '../actions/ReferralAction'
+import { referMember, checkIfMember } from '../actions/ReferralAction'
 
 export class AddReferral extends Component {
     state = {
@@ -20,6 +20,7 @@ export class AddReferral extends Component {
         this.setState({ errorMessage: '', loading: true });
 
         try {
+            let ismember = await checkIfMember();
             result = await referMember(eth_wallet);
             if (result) {
                 this.setState({ msg: <Message positive header="Success!" content={"Friend referred successfully!"} /> });
