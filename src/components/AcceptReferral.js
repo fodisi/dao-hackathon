@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
-import { acceptReferral } from '../actions/ReferralAction';
-//import { getDefaultEthereumAccount } from '../actions/EthereumAccountAction';
+import { acceptReferral, checkIfReferred } from '../actions/ReferralAction';
+import { getDefaultEthereumAccount } from '../actions/EthereumAccountAction';
 
 export class AcceptReferral extends Component {
     state = {
@@ -17,6 +17,7 @@ export class AcceptReferral extends Component {
 
         this.setState({ errorMessage: '', loading: true });
         try {
+            const result = await checkIfReferred();
             const memberAddress = await acceptReferral(this.state.linnia_pk);
             if (memberAddress) {
                 this.setState({ msg: <Message positive header="Success!" content={"Referral accepted. '" + memberAddress + "' is now a member!"} /> })
