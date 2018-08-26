@@ -25,10 +25,13 @@ export default class FullDeail extends Component {
 		linnia_pk:'',
 		detail:'',
 		location:'',
+		decrypted:'',
+		eventHash:'',
 	}
 
 	async componentDidMount(){
 		var eventHash = await SecretEventOrg.methods.currentEventHash().call();
+		this.setState({eventHash});
 	    let {location, detail} = await SecretEventOrg.methods.getSecretEventInfo(eventHash).call();
 	    this.setState({location, detail});
 	}
@@ -37,15 +40,12 @@ export default class FullDeail extends Component {
 		event.preventDefault();
 		const userAddr = await web3.eth.getAccounts();
 		console.log(userAddr[0]);
-		let {canAccess, ipfsHash} = await linnia.getPermission("0x382299ce16150e3e1782a265d1c12f788fafc1947761eed4afd2bfa65618589a",userAddr[0]);
-		console.log(canAccess, ipfsHash);
+		let p = await linnia.getPermission(this.state.eventHash,userAddr[0]);
+		console.log("p", p);
 
-		if(canAccess){
-			console.log('ipfsDownload')
-
-			const privateKey = this.state.linnia_pk
-			const ipfsLink = ipfsHash
-
+		if(p && p.canAccess){
+			const privateKey = this.state.linnia_pk;
+			const ipfsLink = p.dataUri;
 			// Use ipfs library to pull the encrypted data down from IPFS
 			ipfs.cat(ipfsLink, async (err, ipfsRes) => {
 				if (err) {
@@ -57,9 +57,9 @@ export default class FullDeail extends Component {
 					// Try to decrypt with the provided key
 					try {
 						const decrypted = await decrypt(privateKey, encrypted);
-						// cosnt decrypted = JSON.stringify(decrypted.toString());
 						console.log('ipfsDownload.got decrypted data', decrypted);
-						//dispatch(assignRecord(record));
+						
+						this.setState({decrypted});
 					} catch (e) {
 						console.log('ipfsDownload.decryption failed', e);
 						//return (alert('Error decrypting data. Probably wrong private key'));
@@ -89,6 +89,7 @@ export default class FullDeail extends Component {
 					<Button basic primary type='submit' loading={this.state.loading} disabled={this.state.loading}>Decrypt</Button>
 					{this.state.msg}
 				</Form>
+				{ this.state.decrypted && <div>hi{this.state.decrypted}</div> }
 			</div>
 		);
 	}
