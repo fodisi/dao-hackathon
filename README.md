@@ -1,6 +1,6 @@
 ## Linnia Hackathon powered by ConsenSys
 
-**Application Name**: Secret Event Manager
+**Application Name**: Inner circle
 ![Image Logo](https://github.com/vutsalsinghal/linnia-hackathon/blob/master/Logo_SEM.jpg)
 
 ### Mission Statement:
@@ -9,39 +9,29 @@ to our sef growing inner-circle of members . so that, they can confidently recom
 our events secretly and engaging, exotic way
 
 
-#### Join our exclusive societies
-There was many **Exclusive Secret Societies** in the human history. Just to name a few:
-* **Freemasons** – are the longest-lasting secret society and still in existence
-* **Illuminati** – why roots are coming from freemasons but they become a prime focus for conspiracy theorists. There are no evidences that they still exist and this will just add to their mystique.
-* **The Knights Templar** - Early in the twelfth century, nine knights took a vow to protect pilgrims traveling through the Holy Land.
-* **What is the common for all secret societies?**  They all have a secret communications and events invite by members only. What if we can tell you that you can be part of fun, exotic, exclusive event management **- SEM -** build on ethereum blockchain using Linnina protocol?
-* **What are we offering:**
-* You are organizer: create, schedule event with a private location which can be revile to members only.
-* You are the member: view event, register for event pay with crypto currency and be totally anonymous, earn more by referring friends
-* You are the friend of the member: Register with your ETH address using your friend referral link and once you approve and added to the list of member you’ll have all the members rights.
-
-So what are you waiting for join our secret society and our trusted in-circle events at special complete hidden location
-
-                                         
-
+#### If your lucky someone will refer you into the inner circle and you will be able to attend an exciting event!
+* You are organizer: create an event and secretly share the details to your members.
+* You are the member: view the upcoming event and send referals to expand the circle. you can register for event and pay a variable eth amount depending on the event.
+* You are the friend of the member: Register with your ETH address and public key and then you will be member!
 
 ## Getting Started
 
+find a member =)
 
 ### Prerequisites
 
+* use a browser with metamask
+* register as a linnia user. see https://consensys.github.io/linnia-faucet/?42
+
 ### Installing
 
-## Running the tests
-
-### Break down into end to end tests
-
-## Deployment
+* git clone
+* npm install
+* npm start
 
 ## Built With
 
 * [Linnia](https://github.com/ConsenSys/linnia-box) - Permission and storage protocol
-
 
 ## Contributing
 
