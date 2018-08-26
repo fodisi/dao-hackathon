@@ -1,6 +1,5 @@
 pragma solidity ^0.4.24;
 
-// Deployed at 0x889Ad86BE3EBE80D54936539E0D75917F09d1390 on Ropsten!
 
 contract SecretEventOrg{
     address private organizer;                                                  // Address of organizer
@@ -31,7 +30,7 @@ contract SecretEventOrg{
     
     mapping (address => Member) memberInfo;                                     // Mapping from member address to member information
     mapping (address => address) referralInfo;                                  // Refered friend to member mapping
-    mapping (bytes32 => SecretEvent) public eventInfo;                          // Information on events created by this organizer
+    mapping (bytes32 => SecretEvent) public eventInfo;                          // Information on events of this organizer
     
     bytes32 public currentEventHash;
     
@@ -118,11 +117,6 @@ contract SecretEventOrg{
     function attendEvent(bytes32 id) public payable _onlyMember(msg.sender) _eventNotExpired(id) _maxEventCap(id) _ifDepositEnough(id, msg.value){
         uint balance = msg.value - eventInfo[id].deposit;
         msg.sender.transfer(balance);
-    }
-    
-    // Returns event info
-    function getEventInfo(bytes32 _recordHash) public view returns(string eventName, string describe, uint capacity, uint deposit, uint start_time, uint duration){
-        return (eventInfo[_recordHash].eventName, eventInfo[_recordHash].describe, eventInfo[_recordHash].capacity, eventInfo[_recordHash].deposit, eventInfo[_recordHash].start_time, eventInfo[_recordHash].duration);
     }
     
 }
