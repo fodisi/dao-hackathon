@@ -1,10 +1,6 @@
-import config from '../config';
-import Web3 from 'web3';
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
 import { referMember } from '../actions/ReferralAction'
-
-const web3 = new Web3(window.web3.currentProvider);
 
 export class AddReferral extends Component {
     state = {
@@ -19,12 +15,11 @@ export class AddReferral extends Component {
         event.preventDefault();
         const linnia_user = this.state.linnia_pk;
         const eth_wallet = this.state.eth_pk;
-        let memberReferred;
 
         this.setState({ errorMessage: '', loading: true });
 
         try {
-            memberReferred = await referMember(eth_wallet, linnia_user);
+            await referMember(eth_wallet, linnia_user);
             this.setState({ msg: <Message positive header="Success!" content={"Friend referred successfully!"} /> })
         } catch (err) {
             this.setState({ errorMessage: err.message });
