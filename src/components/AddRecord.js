@@ -14,14 +14,13 @@ const host = config.LINNIA_IPFS_HOST;
 const gasPrice = 20;
 const gas = 500000;
 
-
 const web3 = new Web3(window.web3.currentProvider);
 const ipfs = new IPFS({ host: host, port: port, protocol: protocol });
 const linnia = new Linnia(web3, ipfs, { hubAddress });
 
 export class AddRecord extends Component {
   state = {
-    event: '',
+    eventName: '',
     descript: '',
     location:'',
     deposit: 0,
@@ -36,10 +35,10 @@ export class AddRecord extends Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
-    const metadata = this.state.event;
+    const metadata = this.state.eventName;
     const data = {
-      'Name': this.state.event,
-      'Descript': this.state.description,
+      'Name': this.state.eventName,
+      'Descript': this.state.descript,
       'Deposit' : this.state.deposit,
       'Start Time' : this.state.start_time,
       'Duration' : this.state.duration,
@@ -56,8 +55,8 @@ export class AddRecord extends Component {
     try {
       encrypted = await encrypt(ownerPublicKey, JSON.stringify(data));
     } catch (err) {
-      this.setState({ errorMessage: err.message });
-      return
+      this.setState({ errorMessage: err.message, loading: false });
+      return;
     }
 
     try {
@@ -67,8 +66,8 @@ export class AddRecord extends Component {
         })
       })
     } catch (err) {
-      this.setState({ errorMessage: err.message });
-      return
+      this.setState({ errorMessage: err.message, loading: false });
+      return;
     }
 
     const dataUri = ipfsRecord;
@@ -82,8 +81,8 @@ export class AddRecord extends Component {
 
       this.setState({ msg: <Message positive header="Success!" content={"Event Created Successfully!"} /> });
     } catch (err) {
-      this.setState({ errorMessage: err.message });
-      return
+      this.setState({ errorMessage: err.message, loading: false });
+      return;
     }
 
     this.setState({ loading: false });
@@ -94,8 +93,9 @@ export class AddRecord extends Component {
       <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
         <Form.Field>
           <label htmlFor='event'>{"Event Name"}</label>
-          <input id='event' type='text' onChange={event => this.setState({ event: event.target.value })} value={this.state.event} />
+          <input id='eventName' type='text' onChange={event => this.setState({ eventName: event.target.value })} value={this.state.event} />
         </Form.Field>
+        <Form.TextArea value={this.state.description} label="Event Description" onChange={event => this.setState({ description: event.target.value })} />
         <Form.TextArea value={this.state.descript} label="Event Brief" onChange={descript => this.setState({ descript: descript.target.value })} />
         <Form.Field>
           <label htmlFor='deposit'>{"Fee"}</label>
@@ -116,7 +116,7 @@ export class AddRecord extends Component {
         <Form.TextArea value={this.state.details} label="Event Details" onChange={details => this.setState({ details: details.target.value })} />
         <Form.Field>
           <label htmlFor='public_key'>Your Public Key</label>
-          <input id='public_key' type='text' value={this.state.owner_pk} onChange={owner_pk => this.setState({ owner_pk: owner_pk.target.value })} placeholder='Public Key' />
+          <input id='public_key' type='text' value={this.state.owner_pk} onChange={event => this.setState({ owner_pk: event.target.value })} placeholder='Public Key' />
         </Form.Field>
         <Message error header="Oops!" content={this.state.errorMessage} />
         <Button basic primary type='submit' loading={this.state.loading} disabled={this.state.loading}>Create Event</Button>

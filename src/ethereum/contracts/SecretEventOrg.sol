@@ -1,82 +1,84 @@
 pragma solidity ^0.4.24;
 
+// Deployed at 0x889Ad86BE3EBE80D54936539E0D75917F09d1390 on Ropsten!
 
 contract SecretEventOrg{
-    //address of organizer
-    address private organizer;
-    // linnia encryption_key of event organizer 
-    string public encryption_key;
-    // Member infromation type
-    struct Member {
+    address private organizer;                                                  // Address of organizer
+    string public encryption_key;                                               // Linnia encryption_key of event organizer 
+    
+    struct Member {                                                             // Member infromation type
         address addr;
         uint provenance;
         address initiator;
         uint referrals_remaining;
         string public_keys;
     }
-    // event information
-    struct SecretEvent {
+    
+    struct SecretEvent {                                                        // Event information
         string eventName;
         string describe;
         uint capacity;
         uint deposit;
         uint start_time;
         uint duration;
-        string location;// = "SECRET : disclosed to members";
-        string details; // = "SECRET : disclosed to members";
+        string location;                                                        // = "SECRET : Will be disclosed to members";
+        string details;                                                         // = "SECRET : Will be disclosed to members";
     }
-    // mapping from member address to member information
-    mapping (address => Member) memberInfo;
-    // refered friend to member mapping
-    mapping (address => address) referralInfo;
-    // address of members
-    address[] innerCircle;
-    // information on events of this organizer
-    mapping (bytes32 => SecretEvent) public eventInfo;
-    // total events successful so far
-    uint numEvents=0;
-    uint MAX_REFERRALS=5;
+    
+    address[] innerCircle;                                                      // Address of members
+    uint numEvents = 0;                                                         // Total events successful so far
+    uint MAX_REFERRALS = 5;
+    
+    mapping (address => Member) memberInfo;                                     // Mapping from member address to member information
+    mapping (address => address) referralInfo;                                  // Refered friend to member mapping
+    mapping (bytes32 => SecretEvent) public eventInfo;                          // Information on events created by this organizer
+    
     bytes32 public currentEventHash;
-    // constructor
+    
+    // Constructor
     constructor(string public_key) public {
         organizer = msg.sender;
         encryption_key = public_key;
         memberInfo[organizer] = Member(organizer, 0, 0, MAX_REFERRALS, public_key);
     }
     
-    // organizer only
+    // Organizer only
     modifier _onlyOrganizer(address _caller) {
         require(_caller == organizer, "Unauthorized request, organizer only");
         _;
     }
     
-    // member only
+    // Member only
     modifier _onlyMember(address _caller) {
         require(_caller == memberInfo[_caller].addr, "Members only");
         _;
     }
     
-    // check if current event expired
+    // Check if current event expired
     modifier _eventNotExpired(bytes32 id) {
         require(eventInfo[id].start_time != 0 && now < eventInfo[id].start_time, "can't create a new event");
         _;
     }
-    // check if maximum event capacity reached
+    
+    // Check if maximum event capacity reached
     modifier _maxEventCap(bytes32 id) {
         require(eventInfo[id].capacity > 0, "Maximum capacity reached");
         _;
     }
-    //check if member is allowed to refer more friends
+    
+    // Check if member is allowed to refer more friends
     modifier _referralsAllowed(address caller) {
         require(memberInfo[caller].referrals_remaining > 0, "Cant refer more people");
         _;
     }
-    //check if friend is already referred by other member
+    
+    // Check if friend is already referred by other member
     modifier _notAlreadyReferred(address addr) {
         require(referralInfo[addr] == 0, "Someone already referred your friend");
         _;
     }
-    //check if friend is already referred by other member
+    
+    // Check if friend is already referred by other member
     modifier _alreadyReferred(address addr) {
         require(referralInfo[addr] != 0, "Referral by a Member is required");
         _;
@@ -92,28 +94,35 @@ contract SecretEventOrg{
         _;
     }
      
-    // member refers a friend
+    // Member refers a friend
     function referFriend(address _addr) public _onlyMember(msg.sender) _referralsAllowed(msg.sender) _notAlreadyReferred(_addr) {
         referralInfo[_addr] = msg.sender;
         memberInfo[msg.sender].referrals_remaining--; 
     }
-    // referred friend applies for membership 
+    
+    // Referred friend applies for membership 
     function applyMembership(string public_key) public _alreadyReferred(msg.sender) {
         memberInfo[msg.sender] = Member(msg.sender, memberInfo[referralInfo[msg.sender]].provenance+1, referralInfo[msg.sender], MAX_REFERRALS, public_key);
         referralInfo[msg.sender] = 0;
         innerCircle.push(msg.sender);
     } 
     
-    // add Event 
+    // Add Event 
     function addEvent(bytes32 id, string name, string describe, uint capacity, uint deposit, uint start_time, uint duration) public _onlyOrganizer(msg.sender) _eventDoesntExists(id){
         eventInfo[id] = SecretEvent(name, describe, capacity, deposit, now+start_time, duration, "SECRET: revealed to members", "SECRET: revealed to members");
         numEvents++;
         currentEventHash = id;
     }
-    // attendEvent
+    
+    // Attend Event
     function attendEvent(bytes32 id) public payable _onlyMember(msg.sender) _eventNotExpired(id) _maxEventCap(id) _ifDepositEnough(id, msg.value){
         uint balance = msg.value - eventInfo[id].deposit;
         msg.sender.transfer(balance);
+    }
+    
+    // Returns event info
+    function getEventInfo(bytes32 _recordHash) public view returns(string eventName, string describe, uint capacity, uint deposit, uint start_time, uint duration){
+        return (eventInfo[_recordHash].eventName, eventInfo[_recordHash].describe, eventInfo[_recordHash].capacity, eventInfo[_recordHash].deposit, eventInfo[_recordHash].start_time, eventInfo[_recordHash].duration);
     }
     
 }
