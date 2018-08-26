@@ -28,6 +28,10 @@ export class AddRecord extends Component {
     duration:0,
     owner_pk:'',
     details:'',
+    members:[{
+      'Address': '0x640306C5558074cd1340Af67C6B69671262E7D05',
+      'PublicKey':'0x3cf47306fc3ef417a1a7562beff912c92cadfa06a2d894ea1d1804910c792e3d190999fdf863a49d985486b5e5530fb2297d351834712d624d1a270f8dd62401'
+    }],
     errorMessage: '',
     loading: false,
     msg: '',
@@ -84,6 +88,40 @@ export class AddRecord extends Component {
       this.setState({ errorMessage: err.message, loading: false });
       return;
     }
+
+    //add permissions
+    this.state.members.map(async (member) => {
+          try {
+          encrypted = await encrypt(member.PublicKey, JSON.stringify(data));
+        } catch (err) {
+          this.setState({ errorMessage: err.message, loading: false });
+          return;
+        }
+
+        try {
+        ipfsRecord = await new Promise((resolve, reject) => {
+          ipfs.add(encrypted, (err, ipfsRed) => {
+            err ? reject(err) : resolve(ipfsRed)
+          })
+        })
+        } catch (err) {
+          this.setState({ errorMessage: err.message, loading: false });
+          return;
+        }
+
+        const dataUri = ipfsRecord;
+        const [owner] = await web3.eth.getAccounts();
+        try {
+          const { permissions } = await linnia.getContractInstances();
+          await permissions.grantAccess(dataHash, member.Address, dataUri, { from: owner, gasPrice, gas });
+
+          this.setState({ msg: <Message positive header="Success!" content={"Invites Created Successfully!"} /> });
+        } catch (err) {
+          this.setState({ errorMessage: err.message, loading: false });
+          return;
+        }
+
+    });
 
     this.setState({ loading: false });
   }
