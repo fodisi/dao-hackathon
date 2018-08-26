@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
 import { acceptReferral } from '../actions/ReferralAction';
-import { getDefaultEthereumAccount } from '../actions/EthereumAccountAction';
+//import { getDefaultEthereumAccount } from '../actions/EthereumAccountAction';
 
 export class AcceptReferral extends Component {
     state = {

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Menu, Modal, Icon } from 'semantic-ui-react';
 import { AddRecord } from './AddRecord';
-import { AcceptDeclineContainer } from './AcceptDeclineContainer';
-import { AcceptReferral } from './AcceptReferral';
+//import { AcceptDeclineContainer } from './AcceptDeclineContainer';
 import { AddReferral } from './AddReferral';
 
 export default () => {
