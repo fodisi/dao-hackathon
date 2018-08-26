@@ -164,7 +164,7 @@ export const addPermission = (dataHash, viewerEthereumAddress, viewerEncyptionPu
 
   // Re-encrypt the file using the viewer's public key
   try {
-    reencrypted = await encrypt(new Buffer(viewerEncyptionPublicKey, 'hex'), decryptedData);
+    reencrypted = await encrypt(viewerEncyptionPublicKey, decryptedData);
   } catch (e) {
     dispatch(showPermissionError('Unable to encrypt file for viewer. Is the viewer public key correct?'));
     return;

@@ -46,7 +46,7 @@ class App extends Component{
   render() {
     return (
       <Layout>
-        <Container>
+          <h1>Inner Circle</h1>
           <Grid stackable reversed="mobile">
             <Grid.Column width={12}>
               {this.renderEvent()}
@@ -68,7 +68,6 @@ class App extends Component{
               </Grid.Row>
             </Grid.Column>
           </Grid>
-        </Container>
       </Layout>
     );
   }
