@@ -6,6 +6,7 @@ import Linnia from '@linniaprotocol/linnia-js';
 import React, { Component } from 'react';
 import { Form, Button, Message } from 'semantic-ui-react';
 import  moment  from 'moment';
+import EthCrypto from 'eth-crypto';
 
 const hubAddress = config.LINNIA_HUB_ADDRESS;
 const protocol = config.LINNIA_IPFS_PROTOCOL;
@@ -17,6 +18,26 @@ const gas = 500000;
 const web3 = new Web3(window.web3.currentProvider);
 const ipfs = new IPFS({ host: host, port: port, protocol: protocol });
 const linnia = new Linnia(web3, ipfs, { hubAddress });
+
+export const decrypt = async (privKey, encrypted) => {
+
+  /*
+    This function does the opposite of the above function. It takes a private
+    key, marshalls it into a form that the library supports, then uses it to decrypt
+    the provided data. It parses the decrypted data and returns it as a POJO.
+  */
+
+  const hexPrivKeyString = privKey.toString('hex');
+  const hexPrivKey = hexPrivKeyString.substr(0, 2) === '0x' ? hexPrivKeyString : `0x${hexPrivKeyString}`;
+
+  const encryptedObject = EthCrypto.cipher.parse(encrypted);
+  const decrypted = await EthCrypto.decryptWithPrivateKey(
+    hexPrivKey,
+    encryptedObject,
+  );
+  const decryptedPayload = JSON.parse(decrypted);
+  return decryptedPayload.message;
+};
 
 export class AddRecord extends Component {
   state = {
@@ -31,6 +52,36 @@ export class AddRecord extends Component {
     errorMessage: '',
     loading: false,
     msg: '',
+  }
+
+  ipfsDownload = async (event) => {
+    event.preventDefault();
+    console.log('ipfsDownload')
+
+    const privateKey = '0x121b67e4e478e155425b9b55e7f21e3321e813b6a4feb15b5fcbc5e8a299e80b'
+    const ipfsLink = 'QmSBtmouWHKLbXd1B69LH7cv6ksKwUGv3PQsiiapjkeWHq'
+
+    // Use ipfs library to pull the encrypted data down from IPFS
+    ipfs.cat(ipfsLink, async (err, ipfsRes) => {
+      if (err) {
+        console.log('ipfsDownload.error', err);
+      } else {
+        const encrypted = ipfsRes;
+
+        console.log('ipfsDownload.got encrypted data', encrypted);
+        // Try to decrypt with the provided key
+        try {
+          const decrypted = await decrypt(privateKey, encrypted);
+          // cosnt decrypted = JSON.stringify(decrypted.toString());
+          console.log('ipfsDownload.got decrypted data', decrypted);
+          //dispatch(assignRecord(record));
+        } catch (e) {
+          console.log('ipfsDownload.decryption failed', e);
+          //return (alert('Error decrypting data. Probably wrong private key'));
+        }
+      }
+    });
+
   }
 
   handleSubmit = async (event) => {
@@ -91,6 +142,11 @@ export class AddRecord extends Component {
   render() {
     return (
       <Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
+
+      <Form.Field>
+        <button onClick={this.ipfsDownload} />
+      </Form.Field>
+
         <Form.Field>
           <label htmlFor='event'>{"Event Name"}</label>
           <input id='eventName' type='text' onChange={event => this.setState({ eventName: event.target.value })} value={this.state.event} />
