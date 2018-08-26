@@ -25,7 +25,7 @@ contract SecretEventOrg{
         string details;                                                         // = "SECRET : Will be disclosed to members";
     }
     
-    address[] innerCircle;                                                      // Address of members
+    address[] public innerCircle;                                                      // Address of members
     uint numEvents = 0;                                                         // Total events successful so far
     uint MAX_REFERRALS = 5;
     
@@ -124,5 +124,14 @@ contract SecretEventOrg{
     function getEventInfo(bytes32 _recordHash) public view returns(string eventName, string describe, uint capacity, uint deposit, uint start_time, uint duration){
         return (eventInfo[_recordHash].eventName, eventInfo[_recordHash].describe, eventInfo[_recordHash].capacity, eventInfo[_recordHash].deposit, eventInfo[_recordHash].start_time, eventInfo[_recordHash].duration);
     }
-    
+
+    // Checks if address was referred.
+    function checkIfReferred(address addr) public view returns(bool) {
+        return referralInfo[addr] != 0;
+    }
+
+    // Checks if address is a member.
+    function checkIfMember(address addr) public view returns(bool) {
+        return memberInfo[addr].addr != 0;
+    }
 }
