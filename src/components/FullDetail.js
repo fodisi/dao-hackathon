@@ -23,8 +23,6 @@ export default class FullDeail extends Component {
 		loading: false,
 		msg: '',
 		linnia_pk:'',
-		detail:'',
-		location:'',
 		decrypted:'',
 		eventHash:'',
 	}
@@ -32,8 +30,6 @@ export default class FullDeail extends Component {
 	async componentDidMount(){
 		var eventHash = await SecretEventOrg.methods.currentEventHash().call();
 		this.setState({eventHash});
-	    let {location, detail} = await SecretEventOrg.methods.getSecretEventInfo(eventHash).call();
-	    this.setState({location, detail});
 	}
 
 	handleSubmit = async (event) => {
@@ -76,8 +72,8 @@ export default class FullDeail extends Component {
 				<Card>
 					<Card.Content>
 						<Card.Header>Secret Details</Card.Header>
-	          			<Card.Meta>Location: {this.state.location}</Card.Meta>
-	          			<Card.Description>Detail: {this.state.detail}</Card.Description>
+	          			<Card.Meta>Location: </Card.Meta>
+	          			<Card.Description>Detail: </Card.Description>
 	          		</Card.Content>
 				</Card>
 				<Form onSubmit={this.handleSubmit} error={!!this.state.errorMessage}>
