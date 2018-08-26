@@ -1,7 +1,7 @@
 import SecretEventOrg from '../ethereum/SecretEventOrg';
 import { getDefaultEthereumAccount } from '../actions/EthereumAccountAction';
+import config from '../config';
 
-// export const checkIfReferred = (eth_address) => async (dispatch) => {
 export async function checkIfReferred() {
     // Gets the member account.
     const userAddress = await getDefaultEthereumAccount();
@@ -18,9 +18,15 @@ export async function checkIfMember() {
     return result;
 };
 
-// export const referMember = (eth_address, linnia_user_pk) => async (dispatch) => {
+export async function checkIfOwner() {
+    // Gets the user account.
+    //TODO: refactor to use contract's owner from contract (but needs to refactor small contract first).
+    const userAddress = await getDefaultEthereumAccount();
+    return userAddress === config.CONTRACT_OWNER_PK;
+};
+
 export async function referMember(referralAddress) {
-    // Gets the member account.
+    // Gets the user account.
     const memberAccount = await getDefaultEthereumAccount();
     await SecretEventOrg.methods.referFriend(referralAddress).send({ from: memberAccount });
     return true;
