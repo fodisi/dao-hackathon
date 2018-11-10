@@ -1,7 +1,7 @@
 {
-  "name": "YOUR_PROJECT_NAME",
+  "name": "Gina",
   "version": "1.0.0",
-  "description": "YOUR_PROJECT_DESCRIPTION",
+  "description": "Bushwick DAO Winners",
   "private": true,
   "directories": {
     "test": "test"
@@ -21,8 +21,8 @@
     "Ethereum",
     "Blockchain"
   ],
-  "author": "YOUR_NAME",
-  "license": "YOUR_LICENSE",
+  "author": "Gina",
+  "license": "MIT",
   "dependencies": {
     "@daostack/arc": "0.0.0-alpha.52",
     "@daostack/arc.js": "0.0.0-alpha.79",
