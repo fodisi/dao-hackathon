@@ -1,13 +1,12 @@
 import Web3 from 'web3';
+var web3;
 
-let web3;
-
-if (typeof window !== 'undefined' && typeof window.web3 !== 'undefined') {
-    // We are in the browser and metamask is running.
+//overrides metamask v0.2 for our v 1.0
+// and checks if there is an injected web3 instance (metamask/mist)
+if (typeof window.web3 !== undefined) {
     web3 = new Web3(window.web3.currentProvider);
 } else {
-    // We are on the server *OR* the user is not running metamask
-    const provider = new Web3.providers.HttpProvider('https://rinkeby.infura.io/<YOUR-KEY>');
+    const provider = new Web3.providers.HttpProvider('http://127.0.0.1:8545'); // this will be ganache-cli
     web3 = new Web3(provider);
 }
 
