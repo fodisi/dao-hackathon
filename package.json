@@ -1,9 +1,8 @@
 {
-  "name": "linnia-hackathon",
+  "name": "dao-hackathon",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@linniaprotocol/linnia-js": "^0.1.4",
     "eth-lib": "https://github.com/alan2207/eth-lib#cacfdbf5ffe7453168f9dfbf8bba281be3c229d0",
     "ethereumjs-util": "^5.2.0",
     "fs-extra": "^7.0.0",
