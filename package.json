@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bootstrap": "^4.1.3",
     "eth-lib": "https://github.com/alan2207/eth-lib#cacfdbf5ffe7453168f9dfbf8bba281be3c229d0",
     "ethereumjs-util": "^5.2.0",
     "fs-extra": "^7.0.0",
