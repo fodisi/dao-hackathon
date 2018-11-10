@@ -1,6 +1,8 @@
 import React from 'react';
 import {Container} from 'semantic-ui-react';
 import Header from './Header';
+import { PageHeader, Button, Navbar, ButtonGroup, Table, Glyphicon } from 'react-bootstrap';
+
 
 export default props => {
 	return (
