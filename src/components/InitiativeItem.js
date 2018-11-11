@@ -27,4 +27,5 @@ render() {
    )
  }
 }
-export default InitiativeIem;
+
+export default InitiativeItem;
