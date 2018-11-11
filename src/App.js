@@ -18,11 +18,11 @@ class App extends Component {
 
   render() {
 
-    
+
     return (
-      <Layout>
-        
-      </Layout>
+      <div>
+        <Layout />
+      </div>
     );
   }
 }
