@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import ProposalDescription from './ProposalDescription'
+import InitiativeItem from './InitiativeItem'
 import ProposalItemContainer from './ProposalItemContainer'
 
 class ProposalContainer extends Component {
   render() {
     return (
       <div id="proposal-container">
-        <ProposalDescription />
+        <InitiativeItem />
         <ProposalItemContainer />
       </div>
     )

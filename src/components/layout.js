@@ -4,6 +4,7 @@ import Header from './Header';
 import SideNav from './SideNav'
 import ProposalContainer from './ProposalContainer'
 import { PageHeader, Button, Navbar, ButtonGroup, Table, Glyphicon } from 'react-bootstrap';
+import AddProposal from './addProposal';
 
 
 class Layout extends Component {
@@ -13,6 +14,7 @@ class Layout extends Component {
 				<Header />
 				<SideNav />
 				<ProposalContainer />
+                <AddProposal></AddProposal>
 			</div>
 		)
 	}
