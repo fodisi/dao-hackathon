@@ -3,6 +3,7 @@ import {Container} from 'semantic-ui-react';
 import Header from './Header';
 import SideNav from './SideNav'
 import ProposalContainer from './ProposalContainer'
+import AddProposal from './addProposal'
 import { PageHeader, Button, Navbar, ButtonGroup, Table, Glyphicon } from 'react-bootstrap';
 
 
@@ -13,6 +14,7 @@ class Layout extends Component {
 				<Header />
 				<SideNav />
 				<ProposalContainer />
+				<AddProposal />
 			</div>
 		)
 	}

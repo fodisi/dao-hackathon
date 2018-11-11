@@ -25,26 +25,26 @@ class AddProposal extends React.Component {
     };
 
     render () {
-        return (
-            <div>
-                <form>
-                    <ControlLabel>{"Submit a Proposal"}</ControlLabel>
-                    <FormControl               
-                    id="formControlsText"
-                    value = {this.state.name}
-                    type="text"
-                    placeholder="Enter a Proposal" onChange = {this.onInputChange('name')}/>
+      return (
+        <div id="add-proposal">
+          <form>
+            <ControlLabel>{"Submit A Proposal"}</ControlLabel>
+            <FormControl
+            id="formControlsText"
+            value = {this.state.name}
+            type="text"
+            placeholder="Enter a Proposal" onChange = {this.onInputChange('name')}/>
 
-                    <ControlLabel>{"Description"}</ControlLabel>
-                    <FormControl 
-                    id="formControlsText"
-                    value = {this.state.description}
-                    type="text"
-                    placeholder="Enter a description" onChange = {this.onInputChange('description')}/>
-                    <Button bsStyle="primary" onClick = {this.handleSubmit}>Submit</Button>
-                </form>
-            </div>
-        );
+            <ControlLabel className="form-description">{"Description"}</ControlLabel>
+            <FormControl
+            id="formControlsText"
+            value = {this.state.description}
+            type="text"
+            placeholder="Enter a description" onChange = {this.onInputChange('description')}/>
+            <Button bsStyle="primary" onClick = {this.handleSubmit}>Submit</Button>
+          </form>
+        </div>
+      );
     }
 }
 export default AddProposal

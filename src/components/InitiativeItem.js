@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
-class ProposalDescription extends Component {
+class InitiativeItem extends Component {
   render() {
     return (
-      <div id="proposal-description">
+      <div id="initiative-item">
         <h2>Rooftop Party</h2>
         <p>Description.........</p>
       </div>
@@ -11,4 +11,4 @@ class ProposalDescription extends Component {
   }
 }
 
-export default ProposalDescription;
+export default InitiativeItem;
