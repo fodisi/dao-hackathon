@@ -7,6 +7,7 @@ class SideNav extends Component {
         <span className="active">Music</span>
         <span>Food</span>
         <span>Charity</span>
+        <button>+ New Initiative</button>
       </div>
     )
   }

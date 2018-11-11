@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import web3 from '../utils/web3'
 import DAOinstance from '../ethereum/DAOinstance.js'
-class InitiativeIem extends Component {
+class InitiativeItem extends Component {
    state = {
        initiatives : []
    };
@@ -16,12 +16,19 @@ render() {
        return (
            <div>
                <h2>{item.name}</h2>
+               <div id="initiative-item-nav">
+                 <span>View</span>
+                 <span className="divider">   |   </span>
+                 <span>Predict</span>
+                 <span className="divider">   |   </span>
+                 <span>Attest</span>
+               </div>
                <p>{item.description}</p>
            </div>
        )
    })
     return (
-     <div id="proposal-description">
+     <div id="initiative-item">
          {initiatives}
       </div>
    )

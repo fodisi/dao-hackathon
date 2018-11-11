@@ -5,7 +5,7 @@ class ProposalItem extends Component {
     state = {counter:0};
 
     increaseCounter = (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
         let counter = this.state.counter;
         counter++;
         this.setState({counter})

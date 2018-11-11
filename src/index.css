@@ -13,16 +13,19 @@ body {
 #nav {
   width: 100%;
   height: 80px;
-  background: #fcfcfc;
+  /* background: #fcfcfc; */
+  background: #000;
   position: relative;
   top: 0;
   left: 0;
+  border-bottom: 1px solid white;
 }
 
 #nav h1 {
   font-size: 30px;
-  padding: 20px 15px 15px;
+  padding: 20px 20px 15px;
   margin: 0;
+  color: white;
 }
 
 #nav img {
@@ -32,6 +35,7 @@ body {
   position: absolute;
   top: 14px;
   right: 14px;
+  filter: invert(1);
 }
 
 #nav img:hover {
@@ -39,26 +43,39 @@ body {
 }
 
 #side-nav {
-  height: 630px;
+  height: 640px;
   width: 15%;
-  background: #434343;
+  /* background: #434343; */
+  /* background: #373737; */
+  background: #000;
   display: inline-block;
   float: left;
   position: relative;
   color: #ffffff;
   letter-spacing: 4px;
+  text-align: center;
 }
 
 #side-nav span {
-  margin: 40px 30px;
+  /* margin: 40px 30px; */
   font-size: 20px;
   display: block;
+  /* background: grey; */
+  /* padding-top: 20px;
+  padding-left: 20px; */
+  padding: 30px;
+  font-weight: bold;
+  transition-duration: 0.5s;
+  color: #ff368f;
+  border-bottom: 1px solid #343434;
 }
 
 #side-nav span:hover {
-  color: red;
   cursor: pointer;
-  /* background: blue; */
+  background: black;
+  /* font-size: 23px; */
+  letter-spacing: 6px;
+  filter: hue-rotate(300deg);
 }
 
 .active {
@@ -73,45 +90,97 @@ body {
 
 #initiative-item {
   display: inline-block;
-  width: 100%;
+  width: 77%;
   padding-bottom: 10px;
-  /* height: 130px; */
+  height: 117px;
   /* background: #bdbdbd; */
 }
 
 #initiative-item h2 {
-  margin: 40px;
+  margin: 30px 47px;
   font-size: 28px;
+  display: inline-block;
+  margin-right: 55px;
+}
+
+#initiative-item-nav {
+  float: right;
+  margin-top: 44px;
+}
+
+#initiative-item span {
+  margin-left: 11px;
+  font-size: 17px;
+  color: #7e7e7e;
+  transition-duration: 0.5s;
+}
+
+#initiative-item span:hover {
+  cursor: pointer;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.divider {
+  font-size: 18px;
+}
+
+.divider:hover {
+  cursor: none;
+  letter-spacing: 0px;
 }
 
 #initiative-item p {
-  margin: 0 40px 10px;
+  margin: 0 47px 10px;
 }
 
 #proposal-item-container {
   display: inline-block;
   float: left;
-  width: 100%;
-  height: 380px;
-  /* background: #8b8b8b; */
+  width: 85%;
+  height: 384px;
   overflow: scroll;
   margin-top: 5px;
+  margin-bottom: 10px;
 }
 
 #proposal-item {
-  width: 80%;
-  margin: 20px 40px;
+  width: 86%;
+  margin: 20px 45px;
   background: white;
-  padding: 20px;
+  padding: 15px;
   border-radius: 10px;
+}
+
+#proposal-item h4 {
+  font-size: 20px;
+  margin: 25px 10px;
+  display: inline-block;
+  margin-right: 50px;
+}
+
+#proposal-item button {
+  padding: 5px;
+  float: right;
+  margin: 20px;
+}
+
+#proposal-item h6 {
+  display: inline-block;
+  margin: 24px 10px;
+  font-size: 16px;
+  float: right;
 }
 
 #add-proposal {
   display: inline-block;
+  /* background: black; */
+  /* color: #595959; */
+  width: 85%;
 }
 
 #add-proposal form {
-  margin: 15px 40px;
+  margin: 25px 45px 35px;
 }
 
 #add-proposal label {
@@ -128,8 +197,8 @@ body {
   border: 1px solid white;
 }
 
-#add-proposal button {
-  background-color: #0693cd;
+#add-proposal button, #side-nav button {
+  background-color: #8d8d8d;
   border: 0;
   border-radius: 5px;
   cursor: pointer;
@@ -139,4 +208,70 @@ body {
   line-height: 1;
   padding: 10px;
   width: 100px;
+  transition-duration: 0.5s;
+}
+
+#add-proposal button:hover {
+  /* color: #e9e9e9; */
+  letter-spacing: 1px;
+}
+
+#side-nav button {
+  width: 170px;
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
+  background: black;
+  border: 1px solid #a5a5a5;
+  color: #d2d2d2;
+  transition-duration: 0.5s;
+}
+
+#side-nav button:hover {
+  letter-spacing: 1px;
+}
+
+/* LOG IN */
+#login {
+  background: #111111;
+}
+
+#welcome-prompt {
+  width: 42%;
+  height: 655px;
+  background: black;
+  color: white;
+  display: inline-block;
+  padding: 30px 0 30px 60px;
+
+}
+
+#welcome-prompt h1 {
+  font-size: 85px;
+  margin: 5px;
+  letter-spacing: 4px;
+}
+
+.digital {
+  /* color: blue;
+  text-shadow: 0 0 9px white; */
+  color: black;
+  text-shadow: -2px 1px 0px #1fba9d;
+}
+
+#login-form {
+  display: inline-block;
+}
+
+#input-name {
+  font-size: 40px;
+  display: block;
+  position: absolute;
+  top: 25%;
+  right: 25%;
+}
+
+#register {
+  font-size: 40px;
+  display: block;
 }
