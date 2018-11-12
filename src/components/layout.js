@@ -7,7 +7,6 @@ import AddProposal from './addProposal'
 import { PageHeader, Button, Navbar, ButtonGroup, Table, Glyphicon } from 'react-bootstrap';
 
 
-
 class Layout extends Component {
 	render() {
 		return (

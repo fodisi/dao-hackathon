@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import web3 from '../utils/web3'
 import DAOinstance from '../ethereum/DAOinstance.js'
-class InitiativeIem extends Component {
+class InitiativeItem extends Component {
    state = {
        initiatives : []
    };
@@ -27,4 +27,5 @@ render() {
    )
  }
 }
-export default InitiativeIem;
+
+export default InitiativeItem;
