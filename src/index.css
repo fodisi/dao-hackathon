@@ -140,3 +140,7 @@ body {
   padding: 10px;
   width: 100px;
 }
+
+#login {
+    text-align: center;
+}

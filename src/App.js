@@ -73,15 +73,16 @@ class App extends Component {
     const { name } = this.state;
 
     const loginForm = (
-      <Form inline>
+      <Form inline id="login">
         <FormGroup >
           {" "}
           <br />
-          <h1 className="text-center">Welcome Dapp</h1>
+          <h1 className="text-center">Gen Community</h1>
 
           <ControlLabel>
             Name
                     </ControlLabel><br />
+                    <p></p>
           <FormControl
             type="text"
             value={name}
