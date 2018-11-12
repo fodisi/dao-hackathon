@@ -261,17 +261,40 @@ body {
 
 #login-form {
   display: inline-block;
+  width: 45%;
+  height: 150px;
+  margin-left: 50px;
+  position: absolute;
+  top: 50%;
+  text-align: center;
 }
 
 #input-name {
-  font-size: 40px;
-  display: block;
-  position: absolute;
-  top: 25%;
-  right: 25%;
+  font-size: 35px;
+  display: inline-block;
+  border-radius: 5px;
+  border: 5px solid white;
+  padding: 5px;
+  transition-duration: 0.5s;
+}
+
+#input-name:focus {
+  border: 5px solid #00be9c;
+  outline: none;
 }
 
 #register {
-  font-size: 40px;
-  display: block;
+  font-size: 35px;
+  display: inline-block;
+  margin-left: 25px;
+  border-radius: 5px;
+  border: 5px solid white;
+  padding: 5px;
+  transition-duration: 0.5s;
+}
+
+#register:hover {
+  cursor: pointer;
+  background: #00be9c;
+  border: 5px solid #00be9c;
 }

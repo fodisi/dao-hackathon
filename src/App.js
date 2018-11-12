@@ -99,8 +99,8 @@ class App extends Component {
     return (
       <div>
         {/* {!this.state.isRegistered ? (loginForm): (<Layout/>)} */}
-        <Layout />
-        {/* {loginForm} */}
+        {/* <Layout /> */}
+        {loginForm}
       </div>
     );
   }
