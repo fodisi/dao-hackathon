@@ -26,7 +26,8 @@ Our goal is to create a decentralized governance system which allow DAOs, such a
 
 ### Prerequisites
 
-- Use a browser with metamask.
+- Use a browser with Metamask;
+- Have an account on Ropsten network connected to Metamask.
 
 ### Installing
 
