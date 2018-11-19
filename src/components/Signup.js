@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-// import { Grid, Card, Icon, Modal, Button } from 'semantic-ui-react';
-import Web3 from '../utils/web3';
-import { Grid, Row, Col, ControlLabel, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
-
+import { ControlLabel, Form, FormGroup, FormControl, Button } from 'react-bootstrap';
 
 class Signup extends Component {
     constructor(props) {
@@ -10,19 +7,12 @@ class Signup extends Component {
         this.state = {
             name: ""
         }
+    }
 
-    }
     handleChange = (e) => {
-        this.setState({name: e.target.value});
+        this.setState({ name: e.target.value });
     }
-    // handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     const { email, password } = this.state.userinfo;
-    //     fire.auth().signInWithEmailAndPassword(email, password)
-    //         .catch((error) => {
-    //             console.log(error)
-    //         })
-    // }
+
     handleRegister = (e) => {
         e.preventDefault();
         const { name } = this.state;
@@ -30,28 +20,26 @@ class Signup extends Component {
             .createUser(name)
             .send({ from: accounts[0] })
             .then(res => {
-                console.log(res)
+                console.log(res);
             })
             .catch(error => {
-                console.log(error)
-
+                console.log(error);
             })
-        console.log(name)
+        console.log(name);
     }
 
     render() {
         const { name } = this.state;
-
         const loginForm = (
             <Form inline>
                 <FormGroup >
                     {" "}
                     <br />
                     <h1 className="text-center">Welcome Dapp</h1>
-
                     <ControlLabel>
                         Name
-                    </ControlLabel><br />
+                    </ControlLabel>
+                    <br />
                     <FormControl
                         type="text"
                         value={name}
@@ -65,7 +53,6 @@ class Signup extends Component {
                 <Button bsStyle="primary" onClick={this.handleRegister}>
                     register
                 </Button>
-                
             </Form>);
         return (
             <div className='register-form'>

@@ -28,17 +28,15 @@ class App extends Component {
                 .isRegistered(accounts[0])
                 .call({ from: accounts[0] })
                 .then(res => {
-                  console.log(res)
+                  console.log(res);
                   if (res) {
-                    this.setState({
-                      isRegistered: true
-                    })
+                    this.setState({ isRegistered: true })
                   } else {
-                    console.log('no user')
+                    console.log('no user');
                   }
                 })
                 .catch(error => {
-                  console.log(error)
+                  console.log(error);
                 })
             },
           );
@@ -57,14 +55,14 @@ class App extends Component {
       .createUser(name)
       .send({ from: this.state.curAccount })
       .then(res => {
-        console.log(res)
+        console.log(res);
         this.setState({ isRegistered: true })
       })
       .catch(error => {
-        console.log(error)
+        console.log(error);
 
       })
-    console.log(name)
+    console.log(name);
   }
 
   componentDidMount() {
