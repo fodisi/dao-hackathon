@@ -1,0 +1,146 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: #e8e8e8;
+}
+
+#layout {
+  width: 100%;
+  height: 100%;
+}
+
+#nav {
+  width: 100%;
+  height: 80px;
+  background: #fcfcfc;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+#nav h1 {
+  font-size: 30px;
+  padding: 20px 15px 15px;
+  margin: 0;
+}
+
+#nav img {
+  width: 50px;
+  float: right;
+  display: inline-block;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+
+#nav img:hover {
+  cursor: pointer;
+}
+
+#side-nav {
+  height: 630px;
+  width: 15%;
+  background: #434343;
+  display: inline-block;
+  float: left;
+  position: relative;
+  color: #ffffff;
+  letter-spacing: 4px;
+}
+
+#side-nav span {
+  margin: 40px 30px;
+  font-size: 20px;
+  display: block;
+}
+
+#side-nav span:hover {
+  color: red;
+  cursor: pointer;
+  /* background: blue; */
+}
+
+.active {
+  color: red;
+}
+
+#proposal-container {
+  display: inline-block;
+  float: left;
+  width: 85%;
+}
+
+#initiative-item {
+  display: inline-block;
+  width: 100%;
+  padding-bottom: 10px;
+  /* height: 130px; */
+  /* background: #bdbdbd; */
+}
+
+#initiative-item h2 {
+  margin: 40px;
+  font-size: 28px;
+}
+
+#initiative-item p {
+  margin: 0 40px 10px;
+}
+
+#proposal-item-container {
+  display: inline-block;
+  float: left;
+  width: 100%;
+  height: 380px;
+  /* background: #8b8b8b; */
+  overflow: scroll;
+  margin-top: 5px;
+}
+
+#proposal-item {
+  width: 80%;
+  margin: 20px 40px;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+#add-proposal {
+  display: inline-block;
+}
+
+#add-proposal form {
+  margin: 15px 40px;
+}
+
+#add-proposal label {
+  margin: 5px;
+  font-size: 20px;
+}
+
+#add-proposal input {
+  margin: 5px;
+  font-size: 19px;
+  margin-right: 22px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid white;
+}
+
+#add-proposal button {
+  background-color: #0693cd;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1;
+  padding: 10px;
+  width: 100px;
+}
+
+#login {
+    text-align: center;
+}
