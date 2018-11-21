@@ -19,7 +19,7 @@ class InitiativeItem extends Component {
             )
         })
         return (
-            <div id="proposal-description">
+            <div id="initiative-item">
                 {initiatives}
             </div>
         )

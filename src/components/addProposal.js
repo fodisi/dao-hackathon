@@ -25,6 +25,7 @@ class AddProposal extends React.Component {
         return (
             <div id="add-proposal">
                 <form>
+                  <div className="form-field">
                     <ControlLabel>{"Submit A Proposal"}</ControlLabel>
                     <FormControl
                         id="formControlsText"
@@ -33,6 +34,8 @@ class AddProposal extends React.Component {
                         placeholder="Enter a Proposal"
                         onChange={this.onInputChange('name')}
                     />
+                  </div>
+                  <div className="form-field">
                     <ControlLabel
                         className="form-description">{"Description"}
                     </ControlLabel>
@@ -43,6 +46,7 @@ class AddProposal extends React.Component {
                         placeholder="Enter a description"
                         onChange={this.onInputChange('description')}
                     />
+                  </div>
                     <Button
                         bsStyle="primary"
                         onClick={this.handleSubmit}>Submit
